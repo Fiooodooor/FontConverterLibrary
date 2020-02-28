@@ -18,5 +18,8 @@ class gf_font_converter
     static int convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
 };
 
+extern "C" int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
+typedef int copyConvertFont_creator(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
+
 #pragma GCC visibility pop
 #endif

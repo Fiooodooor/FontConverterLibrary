@@ -2,20 +2,10 @@
 //  gf_font_converter.cpp
 //  gf_font_converter
 //
-//  Created by CzornyCzfanyCzop on 2/28/20.
-//  Copyright © 2020 CzornyCzfanyCzop. All rights reserved.
+//  Created by Milosz Linkiewicz on 2/28/20.
+//  Copyright © 2020 GarageFarm.net. All rights reserved.
 //
-/*
- 
 
- #ifdef __cplusplus
- extern "C" {
- #endif
-     #include "../ttc2ttf/ttf_to_ttf.h"
- #ifdef __cplusplus
- }
- #endif
- */
 #include <string>
 #include <vector>
 #include "gf_font_converter.hpp"
@@ -30,6 +20,8 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#define EXPORT __attribute__((visibility("default")))
 
 int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList)
 {
@@ -66,4 +58,10 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
         return -3;
     }
     return fontsConverted;
+}
+
+EXPORT
+int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList)
+{
+    return gf_font_converter::convert(sourceFile, sourcePath, destinationPath, index, fontsList);
 }
