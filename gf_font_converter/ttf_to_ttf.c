@@ -42,6 +42,8 @@ int convert_font(const char* src_file, char* output_file)
     int (*doinitFontForgeMain)(void) = dlsym(fontforge_handle, "doinitFontForgeMain");
     SplineFont *(*LoadSplineFont)(const char *,enum openflags) = dlsym(fontforge_handle, "LoadSplineFont");
     int (*GenerateScript)(SplineFont *,char *,const char *, int, int, char *, struct sflist *,EncMap *, NameList *,int) = dlsym(fontforge_handle, "GenerateScript");
+     void (*SFFlatten)(SplineFont **cidmaster) = dlsym(fontforge_handle, "SFFlatten");
+     EncMap *(*EncMapCopy)(EncMap *map) = dlsym(fontforge_handle, "EncMapCopy");
     
     if(!doinitFontForgeMain || !LoadSplineFont || !GenerateScript)
     {
@@ -56,6 +58,21 @@ int convert_font(const char* src_file, char* output_file)
        
     if (font != NULL)
     {
+        if(font->subfontcnt > 0)
+        {
+            if(!SFFlatten || !EncMapCopy)
+            {
+                if(dlclose(fontforge_handle))
+                    return -3;
+                return -6;
+            }
+            EncMap *tmpMapCpy = EncMapCopy(font->map);
+            SFFlatten(&font);
+            if(font->map == NULL)
+                font->map = tmpMapCpy;
+            else
+                free(tmpMapCpy);
+        }
         int ret = GenerateScript(font, output_file, NULL, 0, -1, NULL, NULL, font->map, NULL, 1);
         dlclose(fontforge_handle);
         if (ret)
