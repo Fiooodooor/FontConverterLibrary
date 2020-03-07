@@ -6,20 +6,15 @@
 //  Copyright © 2020 CzornyCzfanyCzop. All rights reserved.
 //
 
-#ifndef gf_font_converter_
-#define gf_font_converter_
+#ifndef GF_FONTCONVERTER_PUBLIC
+#define GF_FONTCONVERTER_PUBLIC
 
 /* The classes below are exported */
-#pragma GCC visibility push(default)
+//#pragma GCC visibility push(default)
 
-class gf_font_converter
-{
-    public:
-    static int convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
-};
 
-extern "C" int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
+extern "C" static int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
 typedef int copyConvertFont_creator(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
 
-#pragma GCC visibility pop
-#endif
+//#pragma GCC visibility pop
+#endif // GF_FONTCONVERTER_PUBLIC

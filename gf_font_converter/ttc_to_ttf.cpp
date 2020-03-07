@@ -10,7 +10,11 @@
 #include <ctype.h>
 #include <vector>
 
+#if defined(_WIN32) || defined(_WIN64)
+
+#else
 #include <CoreFoundation/CFByteOrder.h>
+#endif
 
 #include "ttc_to_ttf.hpp"
 
