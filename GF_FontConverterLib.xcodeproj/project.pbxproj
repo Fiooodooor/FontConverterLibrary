@@ -10,21 +10,19 @@
 		4A8787202409209C004D1DFC /* gf_font_converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4A87871F2409209C004D1DFC /* gf_font_converter.hpp */; };
 		4A8787222409209C004D1DFC /* gf_font_converterPriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */; };
 		4A8787242409209C004D1DFC /* gf_font_converter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A8787232409209C004D1DFC /* gf_font_converter.cpp */; };
-		4A87872824092396004D1DFC /* ttc_to_ttf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A8786F8240804B5004D1DFC /* ttc_to_ttf.cpp */; };
-		4A87872924092396004D1DFC /* ttf_to_ttf.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A8786F62408029F004D1DFC /* ttf_to_ttf.c */; };
+		4AC2E6C22416689A00786233 /* gf_font_generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AC2E6C12416689A00786233 /* gf_font_generate.c */; };
+		4AC2E6C4241668AF00786233 /* gf_font_generate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AC2E6C3241668AF00786233 /* gf_font_generate.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A8786F52408029F004D1DFC /* ttf_to_ttf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ttf_to_ttf.h; sourceTree = "<group>"; };
-		4A8786F62408029F004D1DFC /* ttf_to_ttf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ttf_to_ttf.c; sourceTree = "<group>"; };
-		4A8786F8240804B5004D1DFC /* ttc_to_ttf.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ttc_to_ttf.cpp; sourceTree = "<group>"; };
-		4A8786F9240804B5004D1DFC /* ttc_to_ttf.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ttc_to_ttf.hpp; sourceTree = "<group>"; };
 		4A8786FC24080616004D1DFC /* fontforge-master */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "fontforge-master"; path = "../../../../Downloads/fontforge-master"; sourceTree = "<group>"; };
 		4A878707240850D9004D1DFC /* libfontforge.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfontforge.4.dylib; path = "../../../../Downloads/fontforge-master/build/lib/libfontforge.4.dylib"; sourceTree = "<group>"; };
 		4A87871D2409209C004D1DFC /* libgf_font_converter.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libgf_font_converter.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A87871F2409209C004D1DFC /* gf_font_converter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gf_font_converter.hpp; sourceTree = "<group>"; };
 		4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gf_font_converterPriv.hpp; sourceTree = "<group>"; };
 		4A8787232409209C004D1DFC /* gf_font_converter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gf_font_converter.cpp; sourceTree = "<group>"; };
+		4AC2E6C12416689A00786233 /* gf_font_generate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gf_font_generate.c; sourceTree = "<group>"; };
+		4AC2E6C3241668AF00786233 /* gf_font_generate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gf_font_generate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +65,8 @@
 		4A87871E2409209C004D1DFC /* gf_font_converter */ = {
 			isa = PBXGroup;
 			children = (
-				4A8786F8240804B5004D1DFC /* ttc_to_ttf.cpp */,
-				4A8786F9240804B5004D1DFC /* ttc_to_ttf.hpp */,
-				4A8786F52408029F004D1DFC /* ttf_to_ttf.h */,
-				4A8786F62408029F004D1DFC /* ttf_to_ttf.c */,
+				4AC2E6C3241668AF00786233 /* gf_font_generate.h */,
+				4AC2E6C12416689A00786233 /* gf_font_generate.c */,
 				4A87871F2409209C004D1DFC /* gf_font_converter.hpp */,
 				4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */,
 				4A8787232409209C004D1DFC /* gf_font_converter.cpp */,
@@ -85,6 +81,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AC2E6C4241668AF00786233 /* gf_font_generate.h in Headers */,
 				4A8787222409209C004D1DFC /* gf_font_converterPriv.hpp in Headers */,
 				4A8787202409209C004D1DFC /* gf_font_converter.hpp in Headers */,
 			);
@@ -147,9 +144,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A87872924092396004D1DFC /* ttf_to_ttf.c in Sources */,
 				4A8787242409209C004D1DFC /* gf_font_converter.cpp in Sources */,
-				4A87872824092396004D1DFC /* ttc_to_ttf.cpp in Sources */,
+				4AC2E6C22416689A00786233 /* gf_font_generate.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,8 +13,8 @@
 //#pragma GCC visibility push(default)
 
 
-extern "C" static int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
-typedef int copyConvertFont_creator(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList);
+extern "C" int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList, std::string libraryPath);
+typedef int copyConvertFont_creator(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList, std::string libraryPath);
 
 //#pragma GCC visibility pop
 #endif // GF_FONTCONVERTER_PUBLIC
