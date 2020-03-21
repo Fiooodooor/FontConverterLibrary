@@ -11,19 +11,21 @@
 #include "gf_font_converter.hpp"
 #include "gf_font_converterPriv.hpp"
 
+#ifdef __cplusplus
 extern "C" {
+#endif
 	#include "gf_font_generate.h"
+#ifdef __cplusplus
 }
+#endif
 
 #if defined(_WIN32) || defined(_WIN64)
 	#define FOPEN(FILEPTR,FILEPATH,FILEMODE) fopen_s(& FILEPTR, FILEPATH, FILEMODE)
 	#define EXPORT	
-	#define MAX_PATH 260
 #else
     #define LIBRARY_FILE_NAME "/renderBeamer.plugin/Contents/Resources/libfontforge.4.dylib"
 	#define FOPEN(FILEPTR,FILEPATH,FILEMODE) FILEPTR = fopen(FILEPATH, FILEMODE)
 	#define EXPORT __attribute__((visibility("default")))
-	#define MAX_PATH 260
 #endif
 //#define EXPORT __attribute__((visibility("default")))
 
@@ -33,7 +35,23 @@ void endswap(T *objp)
     unsigned char *memp = reinterpret_cast<unsigned char*>(objp);
     std::reverse(memp, memp + sizeof(T));
 }
-int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList, std::string libraryPath)
+int font_convert_start(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath)
+{
+    try {
+        if(!fontsList) return -1;
+        fontsList->structureSize = 0;
+        std::string sFile(sourceFile);
+        std::string sPath(sourcePath);
+        std::string sDestination(destinationPath);
+        std::string sLibrary(libraryPath);
+        sLibrary.append(LIBRARY_FILE_NAME);
+        return gf_font_converter::convert(sFile, sPath, sDestination, index, fontsList, sLibrary);
+    }
+    catch(...) { }
+    return -1;
+}
+
+int gf_font_converter::convert(std::string &sourceFile, std::string &sourcePath, std::string &destinationPath, int index, FontsListS *fontsList, std::string &libraryPath)
 {
     int fontsConverted = 0;
 	char fontExtension[4];
@@ -41,8 +59,8 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
         if(sourceFile.length() < 5)
             return -1;
         if(destinationPath.length() < 5)
-            return -2;        
-        
+            return -2;
+
         strcpy(fontExtension, &sourceFile.c_str()[sourceFile.length() - 4]);
         for (long i = 0; i < 4; i++)
 			fontExtension[i] = toupper(fontExtension[i]);
@@ -55,8 +73,13 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
 			destinationPath += ('/' + std::to_string(index) + '_' + sourceFile);
 
             fontsConverted = convert_font(sourcePath.c_str(), destinationPath.c_str(), libraryPath.c_str());
-            if(fontsConverted > 0)
-                fontsList.push_back(destinationPath.c_str());
+            if(fontsConverted > 0) {
+                fontsList->pathsTable = new FontsPathS;
+                if(!fontsList->pathsTable)
+                    return -1;
+                strncpy(fontsList->pathsTable->fontPath, destinationPath.c_str(), LIB_MAXPATH_SIZE);
+                fontsList->structureSize = 1;
+            }
         }
     }
     catch(...) {
@@ -66,8 +89,9 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
     return fontsConverted;
 }
 
-int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList, std::string libraryPath)
+int32_t gf_font_converter::ttcToTtfConvert(std::string &sourceFile, std::string &sourcePath, std::string &destinationPath, int index, FontsListS *fontsList, std::string &libraryPath)
 {
+    std::vector<std::string> fontsListStack;
 	char* ttcBuffer = NULL;
 	uint32_t ttcSize = 0, ttcConverted = 0, ttcResult;
 	FILE* ttcFilePtr = NULL;
@@ -84,12 +108,11 @@ int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string s
 
 	if (*(int32_t*)ttcBuffer != *(int32_t*)"ttcf")
 		return -1;
-	else
-	{
+	else {
 		ttcSize = *(uint32_t*)&ttcBuffer[0x08];
         endswap(&ttcSize);
 
-		char subFontSource[MAX_PATH], subFontDestin[MAX_PATH];
+		char subFontSource[LIB_MAXPATH_SIZE], subFontDestin[LIB_MAXPATH_SIZE];
 		for (uint32_t i = 0; i < ttcSize; i++)
 		{
 			sprintf(subFontSource, "%s(%d)", source.c_str(), i);
@@ -97,21 +120,32 @@ int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string s
 			ttcResult = convert_font(subFontSource, subFontDestin, libraryPath.c_str());
 			if (ttcResult > 0) {
 				++ttcConverted;
-				fontsList.push_back(subFontDestin);
+				fontsListStack.push_back(subFontDestin);
 			}
 		}
 	}
-
+    fontsList->pathsTable = new FontsPathS[ttcConverted];
+    if(!fontsList->pathsTable)
+        return -6;
+    
+    fontsList->structureSize = ttcConverted;
+    for(uint32_t it = 0; it < ttcSize; it++) {
+        strncpy(fontsList->pathsTable[it].fontPath, fontsListStack[it].c_str(), LIB_MAXPATH_SIZE);
+    }
 	free(ttcBuffer);
 	return ttcConverted;
 }
 
 EXPORT
-int copyConvertFont(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, std::vector<std::string> &fontsList, std::string libraryPath)
+#ifdef __cplusplus
+extern "C" {
+#endif
+int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath)
 {
-    libraryPath.append(LIBRARY_FILE_NAME);
-    return gf_font_converter::convert(sourceFile, sourcePath, destinationPath, index, fontsList, libraryPath);
+    return font_convert_start(sourceFile, sourcePath, destinationPath, index, fontsList, libraryPath);
 }
-
+#ifdef __cplusplus
+}
+#endif
 // add handling of font uninitialize 
 

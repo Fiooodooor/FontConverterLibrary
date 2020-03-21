@@ -51,7 +51,6 @@ EncMap *createMapCopy(EncMap *map)
 
 int convert_font(const char* src_file, const char* output_file, const char* library_path)
 {
-
     ffH = dlopen(library_path, RTLD_LOCAL | RTLD_LAZY);
     if(!ffH)
         return -2;
@@ -75,7 +74,6 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
         ffH = NULL;
         return -4;
     }
-        
     SplineFont* font = (SplineFont*)LoadSplineFont(src_file, 1);
        
     if (font != NULL)
@@ -83,6 +81,8 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
         if(font->subfontcnt > 0)
         {
             EncMap *tmpMapCpy = createMapCopy(font->map);
+            if(!tmpMapCpy)
+                return -5;
             SFFlatten(&font);
             if(font->map == NULL)
                 font->map = tmpMapCpy;
