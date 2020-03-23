@@ -11,7 +11,7 @@
 #define GF_FONTCONVERTER_PRIVATE
 #pragma GCC visibility push(hidden)
 
-static int font_convert_start(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath);
+extern "C" int font_convert_start(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath);
 
 class gf_font_converter
 {

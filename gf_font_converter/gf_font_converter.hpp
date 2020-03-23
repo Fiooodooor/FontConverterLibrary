@@ -6,6 +6,10 @@
 #ifndef GF_FONTCONVERTER_PUBLIC
 #define GF_FONTCONVERTER_PUBLIC
 
+#ifdef AE_OS_WIN
+#undef AE_OS_WIN
+#endif
+
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 #define LIB_MAXPATH_SIZE 260

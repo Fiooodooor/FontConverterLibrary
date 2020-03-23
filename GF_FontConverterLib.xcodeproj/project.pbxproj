@@ -68,8 +68,8 @@
 				4AC2E6C3241668AF00786233 /* gf_font_generate.h */,
 				4AC2E6C12416689A00786233 /* gf_font_generate.c */,
 				4A87871F2409209C004D1DFC /* gf_font_converter.hpp */,
-				4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */,
 				4A8787232409209C004D1DFC /* gf_font_converter.cpp */,
+				4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */,
 			);
 			path = gf_font_converter;
 			sourceTree = "<group>";
