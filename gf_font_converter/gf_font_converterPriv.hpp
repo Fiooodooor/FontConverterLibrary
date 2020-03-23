@@ -16,8 +16,8 @@ extern "C" int font_convert_start(const char* sourceFile, const char* sourcePath
 class gf_font_converter
 {
 public:
-	static int convert(std::string &sourceFile, std::string &sourcePath, std::string &destinationPath, int index, FontsListS *fontsList, std::string &libraryPath);
-	static int32_t ttcToTtfConvert(std::string &sourceFile, std::string &sourcePath, std::string &destinationPath, int index, FontsListS *fontsList, std::string &libraryPath);
+	static int convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList, std::string libraryPath);
+	static int32_t ttcToTtfConvert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList, std::string libraryPath);
 };
 
 #pragma GCC visibility pop

@@ -14,7 +14,6 @@ static EncMap *createMapCopy(EncMap *map);
 #else
 
     #include <dlfcn.h>
-    static void* ffH = NULL;
 #endif
 
 EncMap *createMapCopy(EncMap *map)
@@ -51,9 +50,9 @@ EncMap *createMapCopy(EncMap *map)
 
 int convert_font(const char* src_file, const char* output_file, const char* library_path)
 {
-    ffH = dlopen(library_path, RTLD_LOCAL | RTLD_LAZY);
+    void *ffH = dlopen(library_path, RTLD_LOCAL | RTLD_LAZY);
     if(!ffH)
-        return -2;
+        return -10;
     
    int(*doinitFontForgeMain)(void) = dlsym(ffH, "doinitFontForgeMain");
    if(doinitFontForgeMain)
@@ -61,9 +60,8 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
    else {
        dlclose(ffH);
        ffH = NULL;
-       return -3;
-   }
-   
+       return -11;
+   }   
         
     SplineFont *(*LoadSplineFont)(const char *, enum openflags) = dlsym(ffH, "LoadSplineFont");
     int(*GenerateScript)(SplineFont *, char *, const char *, int, int, char *, struct sflist *, EncMap *, NameList *, int) = dlsym(ffH, "GenerateScript");;
@@ -72,7 +70,7 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
     if(!LoadSplineFont || !GenerateScript || !SFFlatten) {
         dlclose(ffH);
         ffH = NULL;
-        return -4;
+        return -12;
     }
     SplineFont* font = (SplineFont*)LoadSplineFont(src_file, 1);
        
@@ -82,7 +80,7 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
         {
             EncMap *tmpMapCpy = createMapCopy(font->map);
             if(!tmpMapCpy)
-                return -5;
+                return -13;
             SFFlatten(&font);
             if(font->map == NULL)
                 font->map = tmpMapCpy;
@@ -96,10 +94,15 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
             ffH = NULL;
             return 1;
         }
+        else {
+            dlclose(ffH);
+            ffH = NULL;
+            return -16;
+        }
     }
     dlclose(ffH);
     ffH = NULL;
-    return -1;
+    return -14;
 }
 
 

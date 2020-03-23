@@ -5,6 +5,14 @@
 //  Created by Milosz Linkiewicz on 2/28/20.
 //  Copyright © 2020 GarageFarm.net. All rights reserved.
 //
+#define LIB_DEBUG 1
+#ifdef LIB_DEBUG
+#include <iostream>
+#define DPRINT(DE_TEXT) std::cout << DE_TEXT << std::endl;
+
+#else
+#define DPRINT(DE_TEXT)
+#endif
 
 #include <string>
 #include <vector>
@@ -37,29 +45,34 @@ void endswap(T *objp)
 }
 int font_convert_start(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath)
 {
+    DPRINT("Font_Convert_Start")
     try {
-        if(!fontsList) return -1;
+        if(!fontsList) return -15;
         fontsList->structureSize = 0;
         std::string sFile(sourceFile);
         std::string sPath(sourcePath);
         std::string sDestination(destinationPath);
         std::string sLibrary(libraryPath);
         sLibrary.append(LIBRARY_FILE_NAME);
+        DPRINT(sLibrary.c_str())
         return gf_font_converter::convert(sFile, sPath, sDestination, index, fontsList, sLibrary);
     }
-    catch(...) { }
-    return -1;
+    catch(...) {
+        return -1;
+    }
+    return -2;
 }
 
-int gf_font_converter::convert(std::string &sourceFile, std::string &sourcePath, std::string &destinationPath, int index, FontsListS *fontsList, std::string &libraryPath)
+int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList, std::string libraryPath)
 {
+    DPRINT("Class convert function called")
     int fontsConverted = 0;
 	char fontExtension[4];
     try {
         if(sourceFile.length() < 5)
-            return -1;
+            return -3;
         if(destinationPath.length() < 5)
-            return -2;
+            return -4;
 
         strcpy(fontExtension, &sourceFile.c_str()[sourceFile.length() - 4]);
         for (long i = 0; i < 4; i++)
@@ -68,7 +81,8 @@ int gf_font_converter::convert(std::string &sourceFile, std::string &sourcePath,
         if (strcmp(fontExtension, ".TTC") == 0 || strcmp(fontExtension, ".OTC") == 0)
             fontsConverted = gf_font_converter::ttcToTtfConvert(sourceFile, sourcePath, destinationPath, index, fontsList, libraryPath);
         else
-        {			
+        {
+            DPRINT("single files converter start")
 			sourcePath += ('/' + sourceFile);
 			destinationPath += ('/' + std::to_string(index) + '_' + sourceFile);
 
@@ -76,7 +90,7 @@ int gf_font_converter::convert(std::string &sourceFile, std::string &sourcePath,
             if(fontsConverted > 0) {
                 fontsList->pathsTable = new FontsPathS;
                 if(!fontsList->pathsTable)
-                    return -1;
+                    return -5;
                 strncpy(fontsList->pathsTable->fontPath, destinationPath.c_str(), LIB_MAXPATH_SIZE);
                 fontsList->structureSize = 1;
             }
@@ -84,13 +98,14 @@ int gf_font_converter::convert(std::string &sourceFile, std::string &sourcePath,
     }
     catch(...) {
         /* error handling */
-        return -3;
+        return -6;
     }
     return fontsConverted;
 }
 
-int32_t gf_font_converter::ttcToTtfConvert(std::string &sourceFile, std::string &sourcePath, std::string &destinationPath, int index, FontsListS *fontsList, std::string &libraryPath)
+int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList, std::string libraryPath)
 {
+    DPRINT("multifile converter start")
     std::vector<std::string> fontsListStack;
 	char* ttcBuffer = NULL;
 	uint32_t ttcSize = 0, ttcConverted = 0, ttcResult;
@@ -100,14 +115,14 @@ int32_t gf_font_converter::ttcToTtfConvert(std::string &sourceFile, std::string 
 	FOPEN(ttcFilePtr, source.c_str(), "rt");
 
 	if (ttcFilePtr == NULL)
-		return -2;
+		return -7;
 
 	ttcBuffer = (char*)malloc(200 * sizeof(char));
 	fread(ttcBuffer, sizeof(char), 199, ttcFilePtr);
 	fclose(ttcFilePtr);
 
 	if (*(int32_t*)ttcBuffer != *(int32_t*)"ttcf")
-		return -1;
+		return -8;
 	else {
 		ttcSize = *(uint32_t*)&ttcBuffer[0x08];
         endswap(&ttcSize);
@@ -126,7 +141,7 @@ int32_t gf_font_converter::ttcToTtfConvert(std::string &sourceFile, std::string 
 	}
     fontsList->pathsTable = new FontsPathS[ttcConverted];
     if(!fontsList->pathsTable)
-        return -6;
+        return -9;
     
     fontsList->structureSize = ttcConverted;
     for(uint32_t it = 0; it < ttcSize; it++) {
