@@ -31,7 +31,6 @@ extern "C" {
 	#define FOPEN(FILEPTR,FILEPATH,FILEMODE) fopen_s(& FILEPTR, FILEPATH, FILEMODE)
 	#define EXPORT	
 #else
-    #define LIBRARY_FILE_NAME "/renderBeamer.plugin/Contents/Resources/libfontforge.4.dylib"
 	#define FOPEN(FILEPTR,FILEPATH,FILEMODE) FILEPTR = fopen(FILEPATH, FILEMODE)
 	#define EXPORT __attribute__((visibility("default")))
 #endif
@@ -43,7 +42,7 @@ void endswap(T *objp)
     unsigned char *memp = reinterpret_cast<unsigned char*>(objp);
     std::reverse(memp, memp + sizeof(T));
 }
-int font_convert_start(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath)
+int font_convert_start(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList)
 {
     DPRINT("Font_Convert_Start")
     try {
@@ -52,10 +51,7 @@ int font_convert_start(const char* sourceFile, const char* sourcePath, const cha
         std::string sFile(sourceFile);
         std::string sPath(sourcePath);
         std::string sDestination(destinationPath);
-        std::string sLibrary(libraryPath);
-        sLibrary.append(LIBRARY_FILE_NAME);
-        DPRINT(sLibrary.c_str())
-        return gf_font_converter::convert(sFile, sPath, sDestination, index, fontsList, sLibrary);
+        return gf_font_converter::convert(sFile, sPath, sDestination, index, fontsList);
     }
     catch(...) {
         return -1;
@@ -63,7 +59,7 @@ int font_convert_start(const char* sourceFile, const char* sourcePath, const cha
     return -2;
 }
 
-int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList, std::string libraryPath)
+int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList)
 {
     DPRINT("Class convert function called")
     int fontsConverted = 0;
@@ -79,14 +75,14 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
 			fontExtension[i] = toupper(fontExtension[i]);
         
         if (strcmp(fontExtension, ".TTC") == 0 || strcmp(fontExtension, ".OTC") == 0)
-            fontsConverted = gf_font_converter::ttcToTtfConvert(sourceFile, sourcePath, destinationPath, index, fontsList, libraryPath);
+            fontsConverted = gf_font_converter::ttcToTtfConvert(sourceFile, sourcePath, destinationPath, index, fontsList);
         else
         {
             DPRINT("single files converter start")
 			sourcePath += ('/' + sourceFile);
 			destinationPath += ('/' + std::to_string(index) + '_' + sourceFile);
 
-            fontsConverted = convert_font(sourcePath.c_str(), destinationPath.c_str(), libraryPath.c_str());
+            fontsConverted = convert_font(sourcePath.c_str(), destinationPath.c_str());
             if(fontsConverted > 0) {
                 fontsList->pathsTable = new FontsPathS;
                 if(!fontsList->pathsTable)
@@ -103,7 +99,7 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
     return fontsConverted;
 }
 
-int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList, std::string libraryPath)
+int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string sourcePath, std::string destinationPath, int index, FontsListS *fontsList)
 {
     DPRINT("multifile converter start")
     std::vector<std::string> fontsListStack;
@@ -132,7 +128,7 @@ int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string s
 		{
 			sprintf(subFontSource, "%s(%d)", source.c_str(), i);
 			sprintf(subFontDestin, "%s/%d_%d_%s.otf", destinationPath.c_str(), index, i, sourceFile.c_str());
-			ttcResult = convert_font(subFontSource, subFontDestin, libraryPath.c_str());
+			ttcResult = convert_font(subFontSource, subFontDestin);
 			if (ttcResult > 0) {
 				++ttcConverted;
 				fontsListStack.push_back(subFontDestin);
@@ -155,9 +151,9 @@ EXPORT
 #ifdef __cplusplus
 extern "C" {
 #endif
-int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath)
+int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList)
 {
-    return font_convert_start(sourceFile, sourcePath, destinationPath, index, fontsList, libraryPath);
+    return font_convert_start(sourceFile, sourcePath, destinationPath, index, fontsList);
 }
 #ifdef __cplusplus
 }

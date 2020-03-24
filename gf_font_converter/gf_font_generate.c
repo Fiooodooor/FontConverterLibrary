@@ -1,20 +1,19 @@
 //#include <stdio.h>
 #include <stdlib.h>
+#include "/Users/ccc/Downloads/fontforge-master/builds/inc/fontforge-config.h"
 #include <fontforge/fontforge.h>
 #include "gf_font_generate.h"
 
 static EncMap *createMapCopy(EncMap *map);
 
-#if defined(_WIN32) || defined(_WIN64)
-	extern int			doinitFontForgeMain(void);
-	extern SplineFont  *LoadSplineFont(const char *, enum openflags);
-	extern int			GenerateScript(SplineFont *, char *, const char *, int, int, char *, struct sflist *, EncMap *, NameList *, int);
-	extern void			SFFlatten(SplineFont **cidmaster);
-	extern char**		GetFontNames(const char*);
-#else
+extern int			doinitFontForgeMain(void);
+extern SplineFont  *LoadSplineFont(const char *, enum openflags);
+extern int			GenerateScript(SplineFont *, char *, const char *, int, int, char *, struct sflist *, EncMap *, NameList *, int);
+extern void			SFFlatten(SplineFont **cidmaster);
+extern char**		GetFontNames(const char*);
 
-    #include <dlfcn.h>
-#endif
+#include <dlfcn.h>
+
 
 EncMap *createMapCopy(EncMap *map)
 {
@@ -48,30 +47,9 @@ EncMap *createMapCopy(EncMap *map)
 	return(NULL);
 }
 
-int convert_font(const char* src_file, const char* output_file, const char* library_path)
+int convert_font(const char* src_file, const char* output_file)
 {
-    void *ffH = dlopen(library_path, RTLD_LOCAL | RTLD_LAZY);
-    if(!ffH)
-        return -10;
-    
-   int(*doinitFontForgeMain)(void) = dlsym(ffH, "doinitFontForgeMain");
-   if(doinitFontForgeMain)
-       doinitFontForgeMain();
-   else {
-       dlclose(ffH);
-       ffH = NULL;
-       return -11;
-   }   
-        
-    SplineFont *(*LoadSplineFont)(const char *, enum openflags) = dlsym(ffH, "LoadSplineFont");
-    int(*GenerateScript)(SplineFont *, char *, const char *, int, int, char *, struct sflist *, EncMap *, NameList *, int) = dlsym(ffH, "GenerateScript");;
-    void(*SFFlatten)(SplineFont **cidmaster) = dlsym(ffH, "SFFlatten");
-    
-    if(!LoadSplineFont || !GenerateScript || !SFFlatten) {
-        dlclose(ffH);
-        ffH = NULL;
-        return -12;
-    }
+    doinitFontForgeMain();
     SplineFont* font = (SplineFont*)LoadSplineFont(src_file, 1);
        
     if (font != NULL)
@@ -90,18 +68,12 @@ int convert_font(const char* src_file, const char* output_file, const char* libr
         char mutable_output_file[300];
         strcpy(mutable_output_file, output_file);
         if(GenerateScript(font, mutable_output_file, NULL, 0, -1, NULL, NULL, font->map, NULL, 1)) {
-            dlclose(ffH);
-            ffH = NULL;
             return 1;
         }
         else {
-            dlclose(ffH);
-            ffH = NULL;
             return -16;
         }
     }
-    dlclose(ffH);
-    ffH = NULL;
     return -14;
 }
 

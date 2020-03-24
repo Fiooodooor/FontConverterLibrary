@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A6DD6A82429DBD6001AB42D /* libfontforge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6A72429DBD6001AB42D /* libfontforge.a */; };
+		4A6DD6B22429E294001AB42D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6B12429E294001AB42D /* CoreServices.framework */; };
+		4A6DD6CF242A0A6D001AB42D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6CE242A0A6D001AB42D /* CoreFoundation.framework */; };
 		4A8787202409209C004D1DFC /* gf_font_converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4A87871F2409209C004D1DFC /* gf_font_converter.hpp */; };
 		4A8787222409209C004D1DFC /* gf_font_converterPriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */; };
 		4A8787242409209C004D1DFC /* gf_font_converter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A8787232409209C004D1DFC /* gf_font_converter.cpp */; };
@@ -15,8 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A8786FC24080616004D1DFC /* fontforge-master */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "fontforge-master"; path = "../../../../Downloads/fontforge-master"; sourceTree = "<group>"; };
-		4A878707240850D9004D1DFC /* libfontforge.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfontforge.4.dylib; path = "../../../../Downloads/fontforge-master/build/lib/libfontforge.4.dylib"; sourceTree = "<group>"; };
+		4A6DD6A72429DBD6001AB42D /* libfontforge.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfontforge.a; path = "../../../../Downloads/fontforge-master/builds/lib/libfontforge.a"; sourceTree = "<group>"; };
+		4A6DD6B12429E294001AB42D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		4A6DD6CE242A0A6D001AB42D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4A87871D2409209C004D1DFC /* libgf_font_converter.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libgf_font_converter.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A87871F2409209C004D1DFC /* gf_font_converter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gf_font_converter.hpp; sourceTree = "<group>"; };
 		4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gf_font_converterPriv.hpp; sourceTree = "<group>"; };
@@ -30,6 +34,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A6DD6B22429E294001AB42D /* CoreServices.framework in Frameworks */,
+				4A6DD6A82429DBD6001AB42D /* libfontforge.a in Frameworks */,
+				4A6DD6CF242A0A6D001AB42D /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,8 +63,9 @@
 		4A8786FB24080616004D1DFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4A878707240850D9004D1DFC /* libfontforge.4.dylib */,
-				4A8786FC24080616004D1DFC /* fontforge-master */,
+				4A6DD6CE242A0A6D001AB42D /* CoreFoundation.framework */,
+				4A6DD6B12429E294001AB42D /* CoreServices.framework */,
+				4A6DD6A72429DBD6001AB42D /* libfontforge.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,27 +194,33 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = "/Users/ccc/Downloads/fontforge-master/builds/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRELINK_LIBS = libfontforge.a;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -245,20 +259,26 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = "/Users/ccc/Downloads/fontforge-master/builds/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRELINK_LIBS = libfontforge.a;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -276,9 +296,36 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "/Users/ccc/Downloads/fontforge-master/**";
 				INSTALL_PATH = "/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/renderBeamer.plugin/Contents/Resources/";
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/ccc/Downloads/fontforge-master/builds/lib",
+					/usr/local/Cellar/libxml2/2.9.10/lib,
+					/usr/local/Cellar/bzip2/1.0.8/lib,
+					/usr/local/Cellar/freetype/2.10.1/lib,
+					/usr/local/Cellar/glib/2.62.5/lib,
+					/usr/local/Cellar/zlib/1.2.11/lib,
+					/usr/local/Cellar/gettext/0.20.1/lib,
+				);
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_LDFLAGS = (
+					/usr/local/Cellar/libxml2/2.9.10/lib/libxml2.a,
+					/usr/local/Cellar/freetype/2.10.1/lib/libfreetype.a,
+					/usr/local/Cellar/gettext/0.20.1/lib/libintl.a,
+					/usr/local/Cellar/zlib/1.2.11/lib/libz.a,
+					/usr/local/Cellar/bzip2/1.0.8/lib/libbz2.a,
+					/usr/local/Cellar/libpng/1.6.37/lib/libpng16.a,
+					"-framework",
+					CoreServices,
+					"-framework",
+					CoreFoundation,
+					"-liconv",
+					"-lglib-2.0",
+					"-lgio-2.0",
+					"-lgmodule-2.0",
+					"-lgobject-2.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SYMROOT = /Users/ccc/Documents/GF_Font_Converter;
 				VALID_ARCHS = x86_64;
 			};
@@ -297,10 +344,37 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "/Users/ccc/Downloads/fontforge-master/**";
 				INSTALL_PATH = "/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/renderBeamer.plugin/Contents/Resources/";
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/ccc/Downloads/fontforge-master/builds/lib",
+					/usr/local/Cellar/libxml2/2.9.10/lib,
+					/usr/local/Cellar/bzip2/1.0.8/lib,
+					/usr/local/Cellar/freetype/2.10.1/lib,
+					/usr/local/Cellar/glib/2.62.5/lib,
+					/usr/local/Cellar/zlib/1.2.11/lib,
+					/usr/local/Cellar/gettext/0.20.1/lib,
+				);
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					/usr/local/Cellar/libxml2/2.9.10/lib/libxml2.a,
+					/usr/local/Cellar/freetype/2.10.1/lib/libfreetype.a,
+					/usr/local/Cellar/gettext/0.20.1/lib/libintl.a,
+					/usr/local/Cellar/zlib/1.2.11/lib/libz.a,
+					/usr/local/Cellar/bzip2/1.0.8/lib/libbz2.a,
+					/usr/local/Cellar/libpng/1.6.37/lib/libpng16.a,
+					"-framework",
+					CoreServices,
+					"-framework",
+					CoreFoundation,
+					"-liconv",
+					"-lglib-2.0",
+					"-lgio-2.0",
+					"-lgmodule-2.0",
+					"-lgobject-2.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SYMROOT = /Users/ccc/Documents/GF_Font_Converter;
 				VALID_ARCHS = x86_64;
 			};

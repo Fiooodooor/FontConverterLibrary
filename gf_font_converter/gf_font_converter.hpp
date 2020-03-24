@@ -27,14 +27,14 @@ typedef struct FontsListS {
 extern "C" { 
 #endif
     #ifdef AE_OS_WIN
-    __declspec(dllexport) int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath);
+    __declspec(dllexport) int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList);
     #else
-    int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath);
+    int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList);
     #endif
 #ifdef __cplusplus
 }
 #endif
-typedef int(__cdecl *copyConvertFont_creator)(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList, const char* libraryPath);
+typedef int(__cdecl *copyConvertFont_creator)(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList);
 
 #pragma GCC visibility pop
 #endif // GF_FONTCONVERTER_PUBLIC
