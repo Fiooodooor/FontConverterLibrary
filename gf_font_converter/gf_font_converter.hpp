@@ -12,7 +12,7 @@
 
 /* The classes below are exported */
 #pragma GCC visibility push(default)
-#define LIB_MAXPATH_SIZE 260
+#define LIB_MAXPATH_SIZE 1041 // 260x4 + 1 = 1040 (unicode on mac char is 4 bytes long)
 
 typedef struct FontsPathS {
     char fontPath[LIB_MAXPATH_SIZE];
@@ -24,7 +24,7 @@ typedef struct FontsListS {
 } FontsListS;
 
 #ifdef __cplusplus
-extern "C" { 
+extern "C" {
 #endif
     #ifdef AE_OS_WIN
     __declspec(dllexport) int __cdecl copyConvertFont(const char* sourceFile, const char* sourcePath, const char* destinationPath, int index, FontsListS *fontsList);

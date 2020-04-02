@@ -78,16 +78,17 @@ int gf_font_converter::convert(std::string sourceFile, std::string sourcePath, s
             fontsConverted = gf_font_converter::ttcToTtfConvert(sourceFile, sourcePath, destinationPath, index, fontsList);
         else
         {
+            char destinationFilePath[LIB_MAXPATH_SIZE-1];
             DPRINT("single files converter start")
 			sourcePath += ('/' + sourceFile);
-			destinationPath += ('/' + std::to_string(index) + '_' + sourceFile);
+			//destinationPath += ('/' + std::to_string(index) + '_' + sourceFile);
 
-            fontsConverted = convert_font(sourcePath.c_str(), destinationPath.c_str());
+            fontsConverted = convert_font(sourcePath.c_str(), destinationPath.c_str(), sourceFile.c_str(), index, destinationFilePath);
             if(fontsConverted > 0) {
                 fontsList->pathsTable = new FontsPathS;
                 if(!fontsList->pathsTable)
                     return -5;
-                strncpy(fontsList->pathsTable->fontPath, destinationPath.c_str(), LIB_MAXPATH_SIZE);
+                strncpy(fontsList->pathsTable->fontPath, destinationFilePath, LIB_MAXPATH_SIZE);
                 fontsList->structureSize = 1;
             }
         }
@@ -123,15 +124,15 @@ int32_t gf_font_converter::ttcToTtfConvert(std::string sourceFile, std::string s
 		ttcSize = *(uint32_t*)&ttcBuffer[0x08];
         endswap(&ttcSize);
 
-		char subFontSource[LIB_MAXPATH_SIZE], subFontDestin[LIB_MAXPATH_SIZE];
+		char subFontSource[LIB_MAXPATH_SIZE], subFontDestin[LIB_MAXPATH_SIZE], subFontResPath[LIB_MAXPATH_SIZE];
 		for (uint32_t i = 0; i < ttcSize; i++)
 		{
 			sprintf(subFontSource, "%s(%d)", source.c_str(), i);
-			sprintf(subFontDestin, "%s/%d_%d_%s.otf", destinationPath.c_str(), index, i, sourceFile.c_str());
-			ttcResult = convert_font(subFontSource, subFontDestin);
+			sprintf(subFontDestin, "%d_%s.otf", i, sourceFile.c_str());
+			ttcResult = convert_font(subFontSource,  destinationPath.c_str(), subFontDestin, index, subFontResPath);
 			if (ttcResult > 0) {
 				++ttcConverted;
-				fontsListStack.push_back(subFontDestin);
+				fontsListStack.push_back(subFontResPath);
 			}
 		}
 	}

@@ -3,9 +3,9 @@
 #include "/Users/ccc/Downloads/fontforge-master/builds/inc/fontforge-config.h"
 #include <fontforge/fontforge.h>
 #include "gf_font_generate.h"
-
+#define ALLOWED_CHARACTERSA "_-0123456789ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz"
 static EncMap *createMapCopy(EncMap *map);
-
+static void leaveAllowedOnly(char *sourceStr);
 extern int			doinitFontForgeMain(void);
 extern SplineFont  *LoadSplineFont(const char *, enum openflags);
 extern int			GenerateScript(SplineFont *, char *, const char *, int, int, char *, struct sflist *, EncMap *, NameList *, int);
@@ -47,8 +47,9 @@ EncMap *createMapCopy(EncMap *map)
 	return(NULL);
 }
 
-int convert_font(const char* src_file, const char* output_file)
+int convert_font(const char* src_file, const char* output_path, const char* output_file, int font_nr, char* destFilePath)
 {
+    destFilePath[0]='\0';
     doinitFontForgeMain();
     SplineFont* font = (SplineFont*)LoadSplineFont(src_file, 1);
        
@@ -65,9 +66,26 @@ int convert_font(const char* src_file, const char* output_file)
             else
                 free(tmpMapCpy);
         }
-        char mutable_output_file[300];
-        strcpy(mutable_output_file, output_file);
-        if(GenerateScript(font, mutable_output_file, NULL, 0, -1, NULL, NULL, font->map, NULL, 1)) {
+        unsigned long len = 0;
+        if(font->fontname && (len = strlen(font->fontname)) > 5) {
+            char* tempFontName = malloc(sizeof(char)*(len+5));
+            char fontExtension[5];
+            strcpy(fontExtension, &output_file[strlen(output_file) - 4]);
+            if(tempFontName!=NULL) {
+                strcpy(tempFontName, font->fontname);
+                leaveAllowedOnly(tempFontName);
+                snprintf(destFilePath, LIB_MAXPATH_SIZE-1, "%s/%d_%s%s", output_path, font_nr, tempFontName, fontExtension);
+                free(tempFontName);
+            }
+            else {
+                snprintf(destFilePath, LIB_MAXPATH_SIZE-1, "%s/%d_%s%s", output_path, font_nr, font->fontname, fontExtension);
+            }
+        }
+        else {
+            snprintf(destFilePath, LIB_MAXPATH_SIZE-1, "%s/%d_%s", output_path, font_nr, output_file);
+        }
+
+        if(GenerateScript(font, destFilePath, NULL, 0, -1, NULL, NULL, font->map, NULL, 1)) {
             return 1;
         }
         else {
@@ -76,5 +94,20 @@ int convert_font(const char* src_file, const char* output_file)
     }
     return -14;
 }
+void leaveAllowedOnly(char *sourceStr)
+{
+    unsigned long long charNrPos = 0;
+    char *analizedString = sourceStr;
+    char *mask = ALLOWED_CHARACTERSA;
 
+    while (analizedString && *analizedString)
+    {
+        charNrPos = strspn(analizedString, mask);
+        analizedString += charNrPos;
+        if (analizedString[0] == '\0')
+            break;
+        else
+            analizedString[0] = '_';
+    }
+}
 
