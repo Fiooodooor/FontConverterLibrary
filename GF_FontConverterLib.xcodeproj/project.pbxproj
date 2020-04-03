@@ -308,6 +308,9 @@
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_LDFLAGS = (
+					"-Wl",
+					"-Bstatic",
+					"/Users/ccc/Downloads/fontforge-master/builds/lib/libfontforge.a",
 					/usr/local/Cellar/libxml2/2.9.10/lib/libxml2.a,
 					/usr/local/Cellar/freetype/2.10.1/lib/libfreetype.a,
 					/usr/local/Cellar/gettext/0.20.1/lib/libintl.a,
@@ -357,6 +360,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
+					"-Wl",
+					"-Bstatic",
+					"/Users/ccc/Downloads/fontforge-master/builds/lib/libfontforge.a",
 					/usr/local/Cellar/libxml2/2.9.10/lib/libxml2.a,
 					/usr/local/Cellar/freetype/2.10.1/lib/libfreetype.a,
 					/usr/local/Cellar/gettext/0.20.1/lib/libintl.a,
