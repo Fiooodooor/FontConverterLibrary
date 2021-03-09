@@ -1,6 +1,6 @@
 //#include <stdio.h>
 #include <stdlib.h>
-#include "/Users/ccc/Downloads/fontforge-master/builds/inc/fontforge-config.h"
+#include "/Users/ccc/Desktop/fontforge-master/builds/inc/fontforge-config.h"
 #include <fontforge/fontforge.h>
 #include "gf_font_generate.h"
 #define ALLOWED_CHARACTERSA "_-0123456789ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz"

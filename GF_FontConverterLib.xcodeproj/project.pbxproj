@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A6512A5244E154200C32C49 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6B12429E294001AB42D /* CoreServices.framework */; };
+		4A6512A8244E154400C32C49 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6CE242A0A6D001AB42D /* CoreFoundation.framework */; };
 		4A6DD6A82429DBD6001AB42D /* libfontforge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6A72429DBD6001AB42D /* libfontforge.a */; };
-		4A6DD6B22429E294001AB42D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6B12429E294001AB42D /* CoreServices.framework */; };
-		4A6DD6CF242A0A6D001AB42D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6DD6CE242A0A6D001AB42D /* CoreFoundation.framework */; };
 		4A8787202409209C004D1DFC /* gf_font_converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4A87871F2409209C004D1DFC /* gf_font_converter.hpp */; };
 		4A8787222409209C004D1DFC /* gf_font_converterPriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4A8787212409209C004D1DFC /* gf_font_converterPriv.hpp */; };
 		4A8787242409209C004D1DFC /* gf_font_converter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A8787232409209C004D1DFC /* gf_font_converter.cpp */; };
@@ -34,9 +34,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A6DD6B22429E294001AB42D /* CoreServices.framework in Frameworks */,
+				4A6512A8244E154400C32C49 /* CoreFoundation.framework in Frameworks */,
 				4A6DD6A82429DBD6001AB42D /* libfontforge.a in Frameworks */,
-				4A6DD6CF242A0A6D001AB42D /* CoreFoundation.framework in Frameworks */,
+				4A6512A5244E154200C32C49 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +121,11 @@
 		4A8786E324017238004D1DFC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastUpgradeCheck = 1110;
-				ORGANIZATIONNAME = CzornyCzfanyCzop;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					4A87871C2409209C004D1DFC = {
 						CreatedOnToolsVersion = 11.1;
@@ -222,6 +225,7 @@
 				PRELINK_LIBS = libfontforge.a;
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -280,6 +284,7 @@
 				PRELINK_LIBS = libfontforge.a;
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -288,45 +293,48 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "/Users/ccc/Downloads/fontforge-master/**";
+				HEADER_SEARCH_PATHS = "/Users/ccc/Desktop/fontforge-master/**";
+				INFOPLIST_FILE = "/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/renderBeamer.plugin-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/renderBeamer.plugin/Contents/Resources/";
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/ccc/Downloads/fontforge-master/builds/lib",
-					/usr/local/Cellar/libxml2/2.9.10/lib,
-					/usr/local/Cellar/bzip2/1.0.8/lib,
-					/usr/local/Cellar/freetype/2.10.1/lib,
-					/usr/local/Cellar/glib/2.62.5/lib,
-					/usr/local/Cellar/zlib/1.2.11/lib,
-					/usr/local/Cellar/gettext/0.20.1/lib,
+					"/Users/ccc/Desktop/fontforge-master/builds/lib",
+					/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp,
 				);
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = 0.9.0.4;
 				OTHER_LDFLAGS = (
 					"-Wl",
 					"-Bstatic",
-					"/Users/ccc/Downloads/fontforge-master/builds/lib/libfontforge.a",
-					/usr/local/Cellar/libxml2/2.9.10/lib/libxml2.a,
+					"/Users/ccc/Desktop/fontforge-master/builds/lib/libfontforge.a",
+					/usr/local/Cellar/libxml2/2.9.10_1/lib/libxml2.a,
 					/usr/local/Cellar/freetype/2.10.1/lib/libfreetype.a,
-					/usr/local/Cellar/gettext/0.20.1/lib/libintl.a,
+					/usr/local/Cellar/gettext/0.20.2_1/lib/libintl.a,
 					/usr/local/Cellar/zlib/1.2.11/lib/libz.a,
 					/usr/local/Cellar/bzip2/1.0.8/lib/libbz2.a,
+					/usr/local/Cellar/libpng/1.6.37/lib/libpng.a,
+					/usr/local/Cellar/libffi/3.3/lib/libffi.a,
 					/usr/local/Cellar/libpng/1.6.37/lib/libpng16.a,
 					"-framework",
 					CoreServices,
 					"-framework",
 					CoreFoundation,
-					"-liconv",
-					"-lglib-2.0",
-					"-lgio-2.0",
-					"-lgmodule-2.0",
-					"-lgobject-2.0",
+					"-Wl",
+					"-Bshared",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libgio-2.0.0.dylib",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libglib-2.0.0.dylib",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libgmodule-2.0.0.dylib",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libgobject-2.0.0.dylib",
+					/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libiconv.2.dylib,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.AfterEffects.renderBeamer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SYMROOT = /Users/ccc/Documents/GF_Font_Converter;
@@ -339,46 +347,49 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "/Users/ccc/Downloads/fontforge-master/**";
+				HEADER_SEARCH_PATHS = "/Users/ccc/Desktop/fontforge-master/**";
+				INFOPLIST_FILE = "/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/renderBeamer.plugin-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/renderBeamer.plugin/Contents/Resources/";
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/ccc/Downloads/fontforge-master/builds/lib",
-					/usr/local/Cellar/libxml2/2.9.10/lib,
-					/usr/local/Cellar/bzip2/1.0.8/lib,
-					/usr/local/Cellar/freetype/2.10.1/lib,
-					/usr/local/Cellar/glib/2.62.5/lib,
-					/usr/local/Cellar/zlib/1.2.11/lib,
-					/usr/local/Cellar/gettext/0.20.1/lib,
+					"/Users/ccc/Desktop/fontforge-master/builds/lib",
+					/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp,
 				);
 				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = 0.9.0.4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-Wl",
 					"-Bstatic",
-					"/Users/ccc/Downloads/fontforge-master/builds/lib/libfontforge.a",
-					/usr/local/Cellar/libxml2/2.9.10/lib/libxml2.a,
+					"/Users/ccc/Desktop/fontforge-master/builds/lib/libfontforge.a",
+					/usr/local/Cellar/libxml2/2.9.10_1/lib/libxml2.a,
 					/usr/local/Cellar/freetype/2.10.1/lib/libfreetype.a,
-					/usr/local/Cellar/gettext/0.20.1/lib/libintl.a,
+					/usr/local/Cellar/gettext/0.20.2_1/lib/libintl.a,
 					/usr/local/Cellar/zlib/1.2.11/lib/libz.a,
 					/usr/local/Cellar/bzip2/1.0.8/lib/libbz2.a,
+					/usr/local/Cellar/libpng/1.6.37/lib/libpng.a,
+					/usr/local/Cellar/libffi/3.3/lib/libffi.a,
 					/usr/local/Cellar/libpng/1.6.37/lib/libpng16.a,
 					"-framework",
 					CoreServices,
 					"-framework",
 					CoreFoundation,
-					"-liconv",
-					"-lglib-2.0",
-					"-lgio-2.0",
-					"-lgmodule-2.0",
-					"-lgobject-2.0",
+					"-Wl",
+					"-Bshared",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libgio-2.0.0.dylib",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libglib-2.0.0.dylib",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libgmodule-2.0.0.dylib",
+					"/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libgobject-2.0.0.dylib",
+					/Users/ccc/Downloads/AfterEffects/AfterEffect_renderBeamer/Mac/Libs_groyp/libiconv.2.dylib,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.AfterEffects.renderBeamer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SYMROOT = /Users/ccc/Documents/GF_Font_Converter;
